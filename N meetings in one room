@@ -1,0 +1,25 @@
+int maxMeetings(int start[], int end[], int n)
+    {
+        if(n<=0 )return 0;
+        if(n==1) return 1;
+        vector<pair<int,int> > test;
+        for(int i=0;i<n;i++){
+            test.push_back( {start[i],end[i]} );
+        }
+        sort(test.begin(),test.end());
+        vector<pair<int,int> > combinator;
+        combinator.push_back(test[0]);
+        int k=0;
+        for(int i=1;i<n;i++){
+             if(combinator[k].second<test[i].first){
+                combinator.push_back(test[i]);
+                k++;
+            }
+            else if(combinator[k].second>=test[i].first and combinator[k].second>=test[i].second){
+                
+                combinator[k]=test[i];
+            }
+        }
+        return combinator.size();
+        // Your code here
+    }
