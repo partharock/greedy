@@ -1,0 +1,51 @@
+ class Node {
+                public :
+                int data=INT_MIN; char letter='!'; int id=-1;
+                Node*left; Node*right;
+                Node(int val){
+                    left=right=NULL;
+                    data=val;
+                }
+                  Node(int setter,int val,char a){
+                      id=setter;
+                    left=right=NULL;
+                    data=val;
+                    letter=a;
+                }
+            };
+            void rootraverse(Node* root,string x,vector<string> &ans){
+                if(root==NULL) return;
+                if(root and root->letter!='!')
+                {
+                    ans.push_back(x);
+                    return ;
+                }
+                rootraverse(root->left,x+'0',ans);
+                rootraverse(root->right,x+'1',ans);
+            }
+		vector<string> huffmanCodes(string S,vector<int> f,int N)
+		{
+		   auto comp=[](Node* &a,Node* &b)
+            {
+                return a->data > b->data ;
+            };
+		  priority_queue< Node*, vector< Node* >, decltype(comp)> q(comp) ;
+		    for(int i=0;i<N;i++)
+		   q.push( new Node{ i,f[i],S[i] } );
+		    while(q.size()>1)
+		    {
+		        auto temp1=q.top();
+		        q.pop();
+		        auto temp2=q.top();
+		        q.pop();
+		        int sum=temp1->data+temp2->data;
+		        Node* head=new Node(sum);
+		        head->left=temp1;
+		        head->right=temp2;
+		        q.push(head);
+		    }
+		    Node* root=q.top();
+		    vector<string> answer;
+		    rootraverse(root,"",answer);
+		    return answer;
+		}
